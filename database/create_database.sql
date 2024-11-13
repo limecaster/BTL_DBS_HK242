@@ -17,9 +17,10 @@ CREATE TABLE Branch (
     Name NVARCHAR(255) PRIMARY KEY,
     Address NVARCHAR(255) NOT NULL,
     Phone NVARCHAR(255) NOT NULL,
-    OpenHour TIME,
-    CloseHour TIME,
+    OpenHour TIME CHECK (OpenHour >= '05:30:00'),
+    CloseHour TIME CHECK (CloseHour <= '23:30:00'),
     OpenDate DATE,
+	NumberOfEmployee INT,
 	Status INT
 );
 
