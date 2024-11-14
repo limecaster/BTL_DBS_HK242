@@ -107,7 +107,7 @@ CREATE TABLE Cake (
 CREATE TABLE Bill (
 	ID INT IDENTITY(1, 1) PRIMARY KEY,
 	ReceiveAddress NVARCHAR(255),
-	ReceiveMONEY MONEY,
+	ReceiveMoney MONEY,
 	Date DATETIME,
 	CashierID CHAR(9) NOT NULL,
 	CustomerPhone CHAR(10) NOT NULL,
