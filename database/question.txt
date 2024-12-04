@@ -1,2 +1,6 @@
 1. Ca nhân viên làm việc bị ảnh hưởng bởi giờ mở/đóng cửa?
 2. Combo cake on delete/update
+
+//
+TRIGGER:
+- Tự động giảm số lượng trong TotalBillCoupon khi update bảng BillApplyTotalBillCoupon

@@ -4,7 +4,7 @@ USE master;
 
 
 GO
-ALTER DATABASE CNPM_HK241_HCMUT_SSO
+ALTER DATABASE bakery
 SET
 	SINGLE_USER
 WITH
@@ -184,7 +184,8 @@ CREATE TABLE
 		CurrentAmount INT,
 		InitialAmount INT,
 		DiscountPercent DECIMAL(5, 2),
-		DiscountMax DECIMAL(5, 2),
+		-- SỐ tiền giảm tối đa
+		DiscountMax NUMERIC, 
 		StartDate DATETIME,
 		EndDate DATETIME,
 		Status INT
