@@ -31,6 +31,7 @@ import {
     @IsString()
     customerNote?: string;
   
+    @IsOptional()
     @IsIn([0, 1], { message: 'Status must be 0 or 1' })
     status: number;
   }

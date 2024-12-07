@@ -9,38 +9,32 @@ export class CakeService {
   constructor(private readonly dataSource: DataSource) {}
 
   async create(createCakeDto: CreateCakeDto): Promise<any> {
-    const queryRunner = this.dataSource.createQueryRunner();
+    try{
+    const query = `
+      EXEC InsertCake 
+        @Name = '${createCakeDto.name}', 
+        @Price = ${createCakeDto.price}, 
+        @IsSalty = ${createCakeDto.isSalty}, 
+        @IsSweet = ${createCakeDto.isSweet}, 
+        @IsOther = ${createCakeDto.isOther}, 
+        @IsOrder = ${createCakeDto.isOrder}, 
+        @CustomerNote = '${createCakeDto.customerNote || null}', 
+        @Status = ${createCakeDto.status || 1}
+    `;
   
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-  
-    try {
-      const query = `
-        INSERT INTO CAKE (Name, Price, IsSalty, IsSweet, IsOther, IsOrder, CustomerNote, Status)
-        VALUES (@0, @1, @2, @3, @4, @5, @6, @7)
-      `;
-      const params = [
-        createCakeDto.name,
-        createCakeDto.price,
-        createCakeDto.isSalty,
-        createCakeDto.isSweet,
-        createCakeDto.isOther,
-        createCakeDto.isOrder,
-        createCakeDto.customerNote || null,
-        createCakeDto.status,
-      ];
-      await queryRunner.query(query, params);
-  
-      await queryRunner.commitTransaction();
-      
-      return { message: 'Create cake successful' };
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-      throw error;
-    } finally {
-      await queryRunner.release();
+      // Thực thi câu lệnh trực tiếp
+      await this.dataSource.query(query);
+      return {
+        message: 'Create cake successful',
+      };
+    }
+    catch (error) {
+      return {
+        message : error.message
+      }
     }
   }
+  
   
 
   async findAll(
@@ -48,40 +42,36 @@ export class CakeService {
     limit: number = 10,
     search: string =''
   ): Promise<any> {
-    const offset = (page - 1) * limit;
-
     const query = 
-    ` SELECT * 
-      FROM Cake 
-      WHERE Name LIKE @0
-      ORDER BY ID
-      OFFSET @1 ROWS FETCH NEXT @2 ROWS ONLY
     `
-    ;
-    const result = await this.dataSource.query(query, [`%${search}%`, offset, limit])
-
-    //tinh tong ban Ghi
-    const countQuerry = 
-    ` SELECT COUNT(*) as total 
-      FROM Cake 
-      WHERE Name LIKE @0
+      EXEC GetAllCakes @Page = ${page}, @Limit = ${limit}, @Search = '${search}'
+    `;
+    const queryPage =
     `
-    const countResult = await this.dataSource.query(countQuerry,[`%${search}%`]);
-    const total = countResult[0]?.total || 0;
+      EXEC CALCULATEPAGE @Search = '${search}'
+    `
+    const result = await this.dataSource.query(query);
+    const resultTotal = await this.dataSource.query(queryPage)
 
+    const total = resultTotal[0]?.Total || 0;
+    const totalPages = Math.ceil(total/limit);
+    
+    // console.log(result);
+    // console.log(total);
+    
     return {
-      data: result,
+      result,
       meta: {
         total,
         page,
         limit,
-        totalPages: Math.ceil(total/limit)
+        totalPages
       }
     }
   }
 
   async findOne(id: number): Promise<any> {
-    const query = 'SELECT * FROM Cake WHERE ID = @0';
+    const query = 'SELECT * FROM Cake WHERE ID = @0 AND Status = 1';
     const result = await this.dataSource.query(query, [id]);
   
     if (!result.length) {
@@ -105,59 +95,56 @@ export class CakeService {
       status,
     } = updateCakeDto;
 
-    // Khởi tạo mảng các trường sẽ được cập nhật
-    const setClauses: string[] = [];
-    if (name !== undefined) {
-      setClauses.push(`Name = '${name}'`);
-    }
-    if (price !== undefined) {
-      setClauses.push(`Price = ${price}`);
-    }
-    if (isSalty !== undefined) {
-      setClauses.push(`IsSalty = ${isSalty ? 1 : 0}`);
-    }
-    if (isSweet !== undefined) {
-      setClauses.push(`IsSweet = ${isSweet ? 1 : 0} `);
-    }
-    if (isOther !== undefined) {
-      setClauses.push(`IsOther = ${isOther ? 1 : 0}`);
-    }
-    if (isOrder !== undefined) {
-      setClauses.push(`IsOrder = ${isOrder ? 1 : 0}`);
-    }
-    if (customerNote !== undefined) {
-      setClauses.push(`CustomerNote = '${customerNote}'`);
-    }
-    if (status !== undefined) {
-      setClauses.push(`Status = ${status}`);
-    }
-
-    // Tạo câu lệnh SQL để cập nhật, chỉ cập nhật các trường có giá trị trong `setClauses`
     const query = `
-      UPDATE Cake
-      SET ${setClauses.join(', ')}
-      WHERE ID = ${id};
-    `;
+    EXEC UpdateCake
+      @ID = @0,
+      @Name = @1,
+      @Price = @2,
+      @IsSalty = @3,
+      @IsSweet = @4,
+      @IsOther = @5,
+      @IsOrder = @6,
+      @CustomerNote = @7,
+      @Status = @8;
+  `;    
+  try {
+    const result = await this.dataSource.query(query, [
+      id,
+      name || null,
+      price || null,
+      isSalty !== undefined ? (isSalty ? 1 : 0) : null,
+      isSweet !== undefined ? (isSweet ? 1 : 0) : null,
+      isOther !== undefined ? (isOther ? 1 : 0) : null,
+      isOrder !== undefined ? (isOrder ? 1 : 0) : null,
+      customerNote || null,
+      status || null
+    ]);
+    const cakeResult = await this.findOne(id);
 
-    try {
-      // Thực thi truy vấn
-      await this.dataSource.query(query);
-      const cakeUpdate = await this.findOne(id);
-
-      return { message: 'Cake updated successfully', data: cakeUpdate };
+    return { message: result[0]?.Message,
+             data: cakeResult
+     };
     } catch (error) {
-      throw new Error(`Failed to update cake: ${error.message}`);
-    }
+    throw new Error(`Failed to update cake: ${error.message}`);
+    } 
   }
 
   async remove(id: number): Promise<any> {
     const cake = await this.findOne(id);
     if (!cake) throw new NotFoundException(`Cake with ID ${id} not found`);
-    const query = `DELETE FROM Cake WHERE ID = @0`;
-    await this.dataSource.query(query, [id]);
+    const query = `
+      EXEC DeleteCake @ID = ${id}
+    `;
 
-    return {
-      message: 'Delete cake successful',
-    };
+    try {
+      const result = await this.dataSource.query(query);
+      const cakeResult = await this.findOne(id)
+      return { message: result[0]?.Message,
+        data: cakeResult
+      };
+    }
+    catch(error){
+      throw new Error(`Failed to delete cake: ${error.message}`);
+    }
   }
 }
