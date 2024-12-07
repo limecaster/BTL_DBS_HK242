@@ -23,9 +23,9 @@ export class CakeService {
     `;
   
       // Thực thi câu lệnh trực tiếp
-      await this.dataSource.query(query);
+      const result = await this.dataSource.query(query);
       return {
-        message: 'Create cake successful',
+        message: result[0]?.Message,
       };
     }
     catch (error) {
