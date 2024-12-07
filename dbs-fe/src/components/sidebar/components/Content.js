@@ -19,13 +19,6 @@ function SidebarContent(props) {
           <Links routes={routes} />
         </Box>
       </Stack>
-
-      <Box
-        mt='60px'
-        mb='40px'
-        borderRadius='30px'>
-        <SidebarCard />
-      </Box>
     </Flex>
   );
 }

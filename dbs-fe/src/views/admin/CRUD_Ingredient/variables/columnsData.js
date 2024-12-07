@@ -1,15 +1,15 @@
 export const columnsDataDevelopment = [
   {
-    Header: "ID",
-    accessor: "ID",
+    Header: "NAME",
+    accessor: "name",
   },
   {
-    Header: "TÊN",
-    accessor: "Name",
+    Header: "TECH",
+    accessor: "tech",
   },
   {
-    Header: "GIÁ",
-    accessor: "Price",
+    Header: "DATE",
+    accessor: "date",
   },
   {
     Header: "PROGRESS",
