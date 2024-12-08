@@ -138,10 +138,7 @@ export class CakeService {
 
     try {
       const result = await this.dataSource.query(query);
-      const cakeResult = await this.findOne(id)
-      return { message: result[0]?.Message,
-        data: cakeResult
-      };
+      return { message: result[0]?.Message};
     }
     catch(error){
       throw new Error(`Failed to delete cake: ${error.message}`);
