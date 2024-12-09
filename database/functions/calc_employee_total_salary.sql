@@ -40,6 +40,10 @@ BEGIN
         RETURN;
     END
 
+    -- set bonus rate to 1 if null
+    IF @BonusRate IS NULL
+        SET @BonusRate = 1;
+
     -- Get the base salary
     SELECT @BaseSalary = Salary
     FROM Employee
