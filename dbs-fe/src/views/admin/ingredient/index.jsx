@@ -26,6 +26,7 @@ import DevelopmentTable from "views/admin/ingredient/components/DevelopmentTable
 import CheckTable from "views/admin/ingredient/components/CheckTable";
 import ColumnsTable from "views/admin/ingredient/components/ColumnsTable";
 import ComplexTable from "views/admin/ingredient/components/ComplexTable";
+import IngredientTable from "views/admin/ingredient/components/IngredientTable";
 import {
   columnsDataDevelopment,
   columnsDataCheck,
@@ -46,7 +47,7 @@ export default function Settings() {
         mb='20px'
         columns={{ sm: 1, md: 2 }}
         spacing={{ base: "20px", xl: "20px" }}>
-        <DevelopmentTable
+        {/* <DevelopmentTable
           columnsData={columnsDataDevelopment}
           tableData={tableDataDevelopment}
         />
@@ -58,6 +59,10 @@ export default function Settings() {
         <ComplexTable
           columnsData={columnsDataComplex}
           tableData={tableDataComplex}
+        /> */}
+        <IngredientTable
+          columnsData={columnsDataDevelopment}
+          tableData={tableDataDevelopment}
         />
       </SimpleGrid>
     </Box>
