@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import {
   Flex,
   Box,
@@ -13,9 +11,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import * as React from 'react';
-
 import {
-  createColumnHelper,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -26,94 +22,33 @@ import {
 import Card from 'components/card/Card';
 import Menu from 'components/menu/MainMenu';
 
-const columnHelper = createColumnHelper();
-
-// const columns = columnsDataCheck;
-export default function ColumnTable(props) {
-  const { tableData } = props;
+export default function ColumnsTable({ columnsData, tableData, tableName}) {
   const [sorting, setSorting] = React.useState([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
-  let defaultData = tableData;
-  const columns = [
-    columnHelper.accessor('name', {
-      id: 'name',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          NAME
-        </Text>
-      ),
-      cell: (info) => (
-        <Flex align="center">
-          <Text color={textColor} fontSize="sm" fontWeight="700">
-            {info.getValue()}
-          </Text>
-        </Flex>
-      ),
-    }),
-    columnHelper.accessor('progress', {
-      id: 'progress',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          PROGRESS
-        </Text>
-      ),
-      cell: (info) => (
-        <Text color={textColor} fontSize="sm" fontWeight="700">
-          {info.getValue()}
-        </Text>
-      ),
-    }),
-    columnHelper.accessor('quantity', {
-      id: 'quantity',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          QUANTITY
-        </Text>
-      ),
-      cell: (info) => (
-        <Text color={textColor} fontSize="sm" fontWeight="700">
-          {info.getValue()}
-        </Text>
-      ),
-    }),
-    columnHelper.accessor('date', {
-      id: 'date',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          DATE
-        </Text>
-      ),
-      cell: (info) => (
-        <Text color={textColor} fontSize="sm" fontWeight="700">
-          {info.getValue()}
-        </Text>
-      ),
-    }),
-  ];
-  const [data, setData] = React.useState(() => [...defaultData]);
+
+  const columns = columnsData.map((column) => ({
+    id: column.accessor, // Add id property
+    accessor: column.accessor,
+    header: () => (
+      <Text
+        justifyContent="space-between"
+        align="center"
+        fontSize={{ sm: '10px', lg: '12px' }}
+        color="gray.400"
+      >
+        {column.Header}
+      </Text>
+    ),
+    cell: (info) => (
+      <Text color={textColor} fontSize="sm" fontWeight="700">
+        {info.getValue()}
+      </Text>
+    ),
+  }));
+
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     state: {
       sorting,
@@ -123,6 +58,7 @@ export default function ColumnTable(props) {
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
   });
+
   return (
     <Card
       flexDirection="column"
@@ -138,7 +74,7 @@ export default function ColumnTable(props) {
           fontWeight="700"
           lineHeight="100%"
         >
-          4-Columns Table
+          {tableName}
         </Text>
         <Menu />
       </Flex>

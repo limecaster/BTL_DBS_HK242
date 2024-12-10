@@ -22,20 +22,20 @@
 
 // Chakra imports
 import { Box, SimpleGrid } from "@chakra-ui/react";
-import DevelopmentTable from "views/admin/dataTables/components/DevelopmentTable";
-import CheckTable from "views/admin/dataTables/components/CheckTable";
-import ColumnsTable from "views/admin/dataTables/components/ColumnsTable";
-import ComplexTable from "views/admin/dataTables/components/ComplexTable";
+import DevelopmentTable from "views/admin/ingredient/components/DevelopmentTable";
+import CheckTable from "views/admin/ingredient/components/CheckTable";
+import ColumnsTable from "views/admin/ingredient/components/ColumnsTable";
+import ComplexTable from "views/admin/ingredient/components/ComplexTable";
 import {
   columnsDataDevelopment,
   columnsDataCheck,
   columnsDataColumns,
   columnsDataComplex,
-} from "views/admin/dataTables/variables/columnsData";
-import tableDataDevelopment from "views/admin/dataTables/variables/tableDataDevelopment.json";
-import tableDataCheck from "views/admin/dataTables/variables/tableDataCheck.json";
-import tableDataColumns from "views/admin/dataTables/variables/tableDataColumns.json";
-import tableDataComplex from "views/admin/dataTables/variables/tableDataComplex.json";
+} from "views/admin/ingredient/variables/columnsData";
+import tableDataDevelopment from "views/admin/ingredient/variables/tableDataDevelopment.json";
+import tableDataCheck from "views/admin/ingredient/variables/tableDataCheck.json";
+import tableDataColumns from "views/admin/ingredient/variables/tableDataColumns.json";
+import tableDataComplex from "views/admin/ingredient/variables/tableDataComplex.json";
 import React from "react";
 
 export default function Settings() {

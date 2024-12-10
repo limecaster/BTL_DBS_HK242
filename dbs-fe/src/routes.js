@@ -12,9 +12,8 @@ import {
 // Admin Imports
 import MainDashboard from 'views/admin/default';
 import NFTMarketplace from 'views/admin/marketplace';
-import Profile from 'views/admin/profile';
 import DataTables from 'views/admin/dataTables';
-import RTL from 'views/admin/rtl';
+import Ingredient from 'views/admin/ingredient';
 
 // Auth Imports
 import SignInCentered from 'views/auth/signIn';
@@ -43,18 +42,18 @@ const routes = [
     secondary: true,
   },
   {
-    name: 'Data Tables',
+    name: 'Cakes',
     layout: '/admin',
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: '/data-tables',
     component: <DataTables />,
   },
   {
-    name: 'Profile',
+    name: 'Ingredients',
     layout: '/admin',
-    path: '/profile',
-    icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
-    component: <Profile />,
+    path: '/ingredient',
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    component: <Ingredient />,
   },
 ];
 
