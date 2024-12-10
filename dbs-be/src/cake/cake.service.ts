@@ -176,4 +176,15 @@ export class CakeService {
     }
   }
 
+  async getTotalImportPrice(minPrice?: number){
+    try {
+      const result = await this.dataSource.query(
+        `exec GetTotalImportPriceByCake @MinTotalImportPrice = $0`,
+        [minPrice]
+      );
+      return result;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
 }

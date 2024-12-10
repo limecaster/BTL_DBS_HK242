@@ -1631,9 +1631,15 @@ BEGIN
         ON TopCakes.CakeID = Cake.ID;
     
 END;
+GO
 
 use bakery
-CREATE PROCEDURE GetTotalImportPriceByCake
+GO
+
+use bakery
+GO
+
+CREATE OR ALTER PROCEDURE GetTotalImportPriceByCake
     @MinTotalImportPrice MONEY -- Điều kiện HAVING: Tổng giá nhập tối thiểu
 AS
 BEGIN
@@ -1653,5 +1659,4 @@ BEGIN
     ORDER BY 
         TotalImportPrice DESC;
 END;
-
-drop procedure GetTotalImportPriceByCake
+GO

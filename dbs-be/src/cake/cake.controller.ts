@@ -59,9 +59,13 @@ export class CakeController {
         throw new BadRequestException('filterQuantity must be greater than or equal to 0.');
       }
     }
-
-
     return this.cakeService.getTopCakes(startDate,endDate,top, search, filterQuantity )
+  }
+
+  @Get('getTotalImportPrice')
+  async getTotalImportPrice(@Query('minPrice') minPrice?: number) {
+    console.log(minPrice);
+    return await this.cakeService.getTotalImportPrice(minPrice);
   }
 
   @Patch('update/:id')
