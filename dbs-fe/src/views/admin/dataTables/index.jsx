@@ -33,23 +33,23 @@ export default function Settings() {
   const [cakeData, setTableData] = React.useState([]);
   const [cakeColumns, setTableColumns] = React.useState([]);
 
+  async function fetchCakeData() {
+    const response = await fetch('http://localhost:3001/cake/getAll');
+    const data = await response.json();
+
+    const columns = Object.keys(data.result[0]).map((key) => ({
+      Header: key,
+      accessor: key,
+    }));
+
+    console.log(columns);
+    console.log(data.result);
+
+    setTableColumns(columns);
+    setTableData(data.result);
+  }
+
   React.useEffect(() => {
-    async function fetchCakeData() {
-      const response = await fetch('http://localhost:3001/cake/getAll');
-      const data = await response.json();
-
-      const columns = Object.keys(data.result[0]).map((key) => ({
-        Header: key,
-        accessor: key,
-      }));
-
-      console.log(columns);
-      console.log(data.result);
-
-      setTableColumns(columns);
-      setTableData(data.result);
-    }
-
     fetchCakeData();
   }, []);
 
@@ -112,12 +112,16 @@ export default function Settings() {
       console.log(data);
 
       addCakeClear();
+      cakeModal.onClose();
+      fetchCakeData();
       alert('Thêm bánh thành công');
     } catch (err) {
       console.log(err);
       alert('Thêm bánh thất bại');
     }
   };
+
+
 
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
@@ -222,7 +226,7 @@ export default function Settings() {
         <MenuButton fontSize={{ base: '15px', lg: '20px' }}>➕ Add</MenuButton>
         <MenuList>
           <MenuItem onClick={cakeModal.onOpen}>🎂 Cake</MenuItem>
-          <MenuItem onClick={comboModal.onOpen}>⚙️ Combo</MenuItem>
+          {/* <MenuItem onClick={comboModal.onOpen}>⚙️ Combo</MenuItem> */}
         </MenuList>
       </Menu>
       <ColumnsTable
