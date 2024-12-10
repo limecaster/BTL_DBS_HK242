@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
   Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { CakeService } from './cake.service';
 import { CreateCakeDto } from './dto/create-cake.dto';
 import { UpdateCakeDto } from './dto/update-cake.dto';
+import { GetTopCakesDto } from './dto/get-top-cakes.dto';
 
 @Controller('cake')
 export class CakeController {
@@ -32,6 +34,34 @@ export class CakeController {
   @Get('getOne/:id')
   findOne(@Param('id') id: string) {
     return this.cakeService.findOne(+id);
+  }
+
+  @Get('getTopCake')
+  async getTopCakes(@Query() query: GetTopCakesDto, 
+                    @Query('top') top: number,
+                    @Query('search') search?: string,
+                    @Query('filterQuantity') filterQuantity?: number){
+    const {startDate, endDate} = query;
+    if(top < 1 ){
+      throw new BadRequestException('Top must be greater than or equal to 1.')
+    }
+    if(!Number.isInteger(top)){
+      throw new BadRequestException('Top must be an integer.');
+    }
+    if (new Date(startDate) > new Date(endDate)) {
+      throw new BadRequestException('startDate cannot be greater than endDate.');
+    }
+    if (filterQuantity) {
+      if (!Number.isInteger(Number(filterQuantity))) {
+        throw new BadRequestException('filterQuantity must be a valid integer.');
+      }
+      if (Number(filterQuantity) < 0) {
+        throw new BadRequestException('filterQuantity must be greater than or equal to 0.');
+      }
+    }
+
+
+    return this.cakeService.getTopCakes(startDate,endDate,top, search, filterQuantity )
   }
 
   @Patch('update/:id')
