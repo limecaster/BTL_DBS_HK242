@@ -1601,3 +1601,57 @@ BEGIN
 END;
 GO
 
+
+USE bakery;
+GO
+
+CREATE OR ALTER PROCEDURE GetTopCakes
+    @StartDate DATETIME,
+    @EndDate DATETIME,
+    @Top INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT CakeID, Name, TotalQuantity
+    FROM 
+        (
+            SELECT TOP (@Top) CakeID, SUM(Amount) AS TotalQuantity
+            FROM BillHasCake
+            WHERE BillID IN (
+                SELECT BillID
+                FROM Bill
+                WHERE Date BETWEEN @StartDate AND @EndDate
+            )
+            GROUP BY CakeID
+            ORDER BY TotalQuantity DESC
+        )
+        AS TopCakes 
+        JOIN Cake
+        ON TopCakes.CakeID = Cake.ID;
+    
+END;
+
+use bakery
+CREATE PROCEDURE GetTotalImportPriceByCake
+    @MinTotalImportPrice MONEY -- Điều kiện HAVING: Tổng giá nhập tối thiểu
+AS
+BEGIN
+    SELECT 
+        c.Name AS CakeName,
+        SUM(i.ImportPrice * chi.Amount / 100) AS TotalImportPrice
+    FROM 
+        CakeHasIngredient chi
+    INNER JOIN 
+        Cake c ON chi.CakeID = c.ID
+    INNER JOIN 
+        Ingredient i ON chi.IngredientID = i.ID
+    GROUP BY 
+        c.Name
+    HAVING 
+        SUM(i.ImportPrice * chi.Amount) >= @MinTotalImportPrice
+    ORDER BY 
+        TotalImportPrice DESC;
+END;
+
+drop procedure GetTotalImportPriceByCake

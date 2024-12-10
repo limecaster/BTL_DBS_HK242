@@ -40,10 +40,14 @@ INSERT INTO Cake (Name, Price, Status)
 VALUES ('Cake 1', 10, 1), ('Cake 2', 20, 1), ('Cake 3', 30, 1);
 
 INSERT INTO Bill (Date, ReceiveMoney, CashierID, CustomerPhone, Status)
-VALUES ('2021-01-01', 100, '123456789', '0123456789', 1), ('2021-01-02', 200, '123456789', '0123456789', 1), ('2021-01-03', 300, '123456789', '9876543210', 1);
+VALUES ('2021-01-01', 100, 'CA0020004', '0123456789', 1), ('2021-01-02', 200, 'CA0020004', '0123456789', 1), ('2021-01-03', 300, 'CA0020004', '9876543210', 1);
 
 INSERT INTO BillHasCake (BillID, CakeID, Amount, Status)
-VALUES (4, 1, 1, 1), (5, 2, 2, 1), (6, 3, 3, 1);
+VALUES (6, 13, 1, 1), (7, 14, 2, 1), (8, 15, 3, 1);
 
 -- Test the procedure
 EXEC GetTopCakes '2021-01-01', '2021-01-03', 10;
+
+Select * FROM Employee
+Select * FROM Bill
+Select * FROM Cake
