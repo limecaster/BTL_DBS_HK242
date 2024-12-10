@@ -1,0 +1,15 @@
+1. hàm tính tổng tiền tất cả các bill của một customerID -> for web (backend call in a SELECT query to get list of top N customer to display)
+GetTotalMoneyPaidByCustomer(Phone, StartDate, EndDate)
+set Date NULL to get total of all time
+
+2. tính giá sau giảm của 1 cakeID -> xuất bill
+CalculateDiscountedCakePrice(INT CakeID)
+
+3. tính tổng lương nhân viên trong 1 giai đoạn -> tính lương tháng
+CalculateEmployeeTotalSalary(EID, StartDate, EndDate, BonusRate)
+BonusRate là phần tỉ lệ thưởng khi làm vào T7/CN, set to null nếu ko thưởng
+
+--> Note
+thêm attribute totalPrice cho Bill
+đổi Gender: M/F
+Change StartHour of Shift to TIME type
