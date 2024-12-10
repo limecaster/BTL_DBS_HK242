@@ -1,13 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCakeDto } from './dto/create-cake.dto';
 import { UpdateCakeDto } from './dto/update-cake.dto';
 import { DataSource } from 'typeorm';
+import { filter } from 'rxjs';
 
 
 @Injectable()
 export class CakeService {
   constructor(private readonly dataSource: DataSource) {}
 
+  //5a
   async create(createCakeDto: CreateCakeDto): Promise<any> {
     try{
     const query = `
@@ -144,4 +146,34 @@ export class CakeService {
       throw new Error(`Failed to delete cake: ${error.message}`);
     }
   }
+  //5b
+  async getTopCakes(startDate: string, endDate: string, top: number, search?: string, filterQuantity ?: number){
+    try{
+      
+      const result = await this.dataSource.query(
+        `EXEC GetTopCakes @StartDate = @0, @EndDate = @1, @Top = @2`,
+        [startDate, endDate, top]
+      );
+      let filteredResults = result;
+
+      //loc theo tim kiem
+      if(search){
+        const lowerSearch = search.toLowerCase();
+        filteredResults = filteredResults.filter((cake) => cake.Name.toLowerCase().includes(lowerSearch))
+      }
+
+      // loc the filterQuantity (loc theo so luong banh lon hon so luong truyen vao)
+      if(filterQuantity){
+        filteredResults = filteredResults.filter(
+          (cake) => (cake.TotalQuantity >= filterQuantity)
+        )
+      }
+
+      return filteredResults;
+    }
+    catch(error){
+      throw new BadRequestException(error.message)
+    }
+  }
+
 }
