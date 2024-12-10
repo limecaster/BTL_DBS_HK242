@@ -56,7 +56,14 @@ export const getIngredient = async (id) => {
 export const updateIngredient = async (id, data) => {
     try {
         // localhost:3001/ingredient/update/:id
-        const response = await axios.put(API_URL + id, data);
+        console.log(data);
+        const response = await fetch(API_URL + 'update/' + id, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
 
         if (response.status !== 200) {
             alert('Cập nhật nguyên liệu thất bại: ' + response.data.message);
