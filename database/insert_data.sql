@@ -195,7 +195,7 @@ INSERT INTO
 VALUES
     ('Default', 0, 0, 1),
     ('Bronze', 100, 0.05, 1),
-    ('Silve', 300, 0.1, 1),
+    ('Silver', 300, 0.1, 1),
     ('Gold', 500, 0.15, 1);
 SELECT * FROM Membership
 

@@ -41,36 +41,43 @@ BEGIN
 
     RETURN @DiscountedPrice;
 END;
+GO
 
 ------------------------------------------------------------------------
 --------------------------------- DEMO ---------------------------------
 ------------------------------------------------------------------------
--- INSERT INTO
---     Cake (Name, Price, IsSalty, IsSweet, IsOther, IsOrder, CustomerNote, Status)
--- VALUES
---     (N'Chocolate cake', 40000, 0, 1, 0, 0, NULL, 1), -- 5
---     (N'Red velvet', 45000, 0, 1, 0, 0, NULL, 1), -- 6
---     (N'Cheese cake', 35000, 0, 1, 0, 0, NULL, 1), -- 7
---     (N'Matcha cupcake', 35000, 0, 1, 0, 0, NULL, 1); -- 8
--- GO
-    
+INSERT INTO
+    Cake (Name, Price, IsSalty, IsSweet, IsOther, IsOrder, CustomerNote, Status)
+VALUES
+    (N'Chocolate cake', 40000, 0, 1, 0, 0, NULL, 1), -- 5
+    (N'Red velvet', 45000, 0, 1, 0, 0, NULL, 1), -- 6
+    (N'Cheese cake', 35000, 0, 1, 0, 0, NULL, 1), -- 7
+    (N'Matcha cupcake', 35000, 0, 1, 0, 0, NULL, 1); -- 8
+GO
 
--- INSERT INTO
---     PerProductCoupon (DiscountAmount, StartDate, EndDate, CakeID, Status)
--- VALUES
---     (5000, '2024-12-06', '2024-12-12', 5, 1), -- valid
---     (6000, '2024-12-09', '2024-12-10', 5, 1), -- valid with higher discount
---     (10000, '2024-11-09', '2024-11-10', 5, 1), -- highest discount but expired
---     (4000, '2024-11-09', '2024-11-10', 6, 1), -- expired
---     (12000, '2024-12-09', '2024-12-10', 6, 0), -- valid but inactive
---     (30000, '2024-12-09', '2024-12-10', 7, 0), -- valid but inactive
---     (40000, '2024-12-09', '2024-12-10', 7, 1); -- valid and free
--- GO
+INSERT INTO
+    PerProductCoupon (DiscountAmount, StartDate, EndDate, CakeID, Status)
+VALUES
+    (5000, '2024-12-06', '2024-12-25', 13, 1), -- valid
+    (6000, '2024-12-09', '2024-12-26', 13, 1), -- valid with higher discount
+    (10000, '2024-11-09', '2024-11-10', 13, 1), -- highest discount but expired
+    (4000, '2024-11-09', '2024-11-10', 14, 1), -- expired
+    (12000, '2024-12-09', '2024-12-25', 14, 0), -- valid but inactive
+    (30000, '2024-12-09', '2024-12-25', 15, 0), -- valid but inactive
+    (40000, '2024-12-09', '2024-12-25', 15, 1); -- valid and free
+GO
 
+SELECT *
+FROM Cake
+GO
 
--- SELECT
---     dbo.CalculateDiscountedCakePrice(5) AS 'Chocolate cake',
---     dbo.CalculateDiscountedCakePrice(6) AS 'Red velvet',
---     dbo.CalculateDiscountedCakePrice(7) AS 'Cheese cake',
---     dbo.CalculateDiscountedCakePrice(8) AS 'Matcha cupcake',
---     dbo.CalculateDiscountedCakePrice(9) AS 'Non-existent cake'; -- non-existent cake
+SELECT *
+FROM PerProductCoupon
+GO
+
+SELECT
+    dbo.CalculateDiscountedCakePrice(13) AS 'Chocolate cake',
+    dbo.CalculateDiscountedCakePrice(14) AS 'Red velvet',
+    dbo.CalculateDiscountedCakePrice(15) AS 'Cheese cake',
+    dbo.CalculateDiscountedCakePrice(16) AS 'Matcha cupcake',
+    dbo.CalculateDiscountedCakePrice(17) AS 'Non-existent cake'; -- non-existent cake

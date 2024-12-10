@@ -103,8 +103,8 @@ GO
 -- Insert test employee data
 INSERT INTO Employee (ID, FirstName, LastName, Gender, Salary, IsPartTime, ETypeID, BranchName, Status)
 VALUES 
-('MA0010012', 'John', 'Doe', 0, 150000, 0, 'MA', 'Chi nhánh 2', 1),
-('MA0010031', 'Jane', 'Smith', 1, 180000, 0, 'MA', 'Chi nhánh 2', 1);
+('MA0010012', 'John', 'Doe', 'F', 150000, 0, 'MA', 'Branch 2', 1),
+('MA0010031', 'Jane', 'Smith', 'M', 180000, 0, 'MA', 'Branch 2', 1);
 
 -- Insert test shifts
 INSERT INTO Shift (WeekDay, StartHour, Status)
@@ -129,4 +129,5 @@ VALUES
 ('MA0010031', 7, '08:00:00', '2024-12-07', 1); -- Saturday shift
 
 SELECT * FROM dbo.CalculateEmployeeTotalSalary('MA0010012', '2024-12-01', '2024-12-08', 1.2); -- ok
+SELECT * FROM dbo.CalculateEmployeeTotalSalary('MA0010031', '2024-12-01', '2024-12-08', 1.2); -- ok
 SELECT * FROM dbo.CalculateEmployeeTotalSalary('MA0013312', '2024-12-01', '2024-12-08', 1.2); -- invalid EID

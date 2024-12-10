@@ -1,7 +1,8 @@
 use bakery
 -- Trigger Tu dong cap nhat membershipID khi update membershipPoint
+GO
 
-create trigger UpdateMembership
+create or alter trigger UpdateMembership
 on Customer
 after update
 as
@@ -11,26 +12,32 @@ begin
 		declare @MembershipPoint int;
 		declare @CustomerPhone char(10);
 		declare @NewMembershipID int;
-	select @MembershipPoint = MembershipPoint, @CustomerPhone = Phone
-	from inserted;
+		
+		select @MembershipPoint = MembershipPoint, @CustomerPhone = Phone
+		from inserted;
 
-	if @MembershipPoint >= 500
-		set @NewMembershipID = 3; -- Plantinum
-	else if @MembershipPoint >= 300
-		set @NewMembershipID = 2; -- Gold
-	else if @MembershipPoint >= 100
-		set @NewMembershipID = 1; -- Silver
-	else
-		set @NewMembershipID = null;
+		select TOP 1 @NewMembershipID = Membership.ID
+		from Membership
+		where @MembershipPoint >= Threshold
+		order by Threshold desc
 
-	update Customer
-	set MembershipID = @NewMembershipID
-	where Phone = @CustomerPhone
+		update Customer
+		set MembershipID = @NewMembershipID
+		where Phone = @CustomerPhone
 	end
 end;
+
 
 
 --TEST--
 UPDATE Customer
 SET MembershipPoint = 600
-WHERE Phone = '0901234567';
+WHERE Phone = '0842000111';
+
+SELECT *
+FROM [bakery].[dbo].[Customer]
+WHERE Phone = '0842000111'
+
+SELECT *
+FROM Membership
+

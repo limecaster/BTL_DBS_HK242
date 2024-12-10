@@ -36,12 +36,12 @@ select * from Branch
 select * from Employee where ETypeID = 'MA'
 
 INSERT INTO Employee (ID, FirstName, LastName, Gender, Salary, IsPartTime, ETypeID, BranchName, Status)
-VALUES ('MA1234568', 'John', 'Doe', 1, 5000, 0, 'MA', 'Chi nhánh 1', 1); -- Hợp lệ
+VALUES ('MA1234568', 'John', 'Doe', 'M', 5000, 0, 'MA', 'Branch 1', 1); -- Hợp lệ
 
 
 INSERT INTO Employee (ID, FirstName, LastName, Gender, Salary, IsPartTime, ETypeID, BranchName, Status)
-VALUES ('CA1234567', 'Jane', 'Smith', 0, 4500, 1, 'MA', 'Chi nhánh 2', 1); -- Vi phạm ràng buộc 1
+VALUES ('CA1234567', 'Jane', 'Smith', 'F', 4500, 1, 'MA', 'Branch 2', 1); -- Vi phạm ràng buộc 1
 
 INSERT INTO Employee (ID, FirstName, LastName, Gender, Salary, IsPartTime, ETypeID, BranchName, Status)
-VALUES ('MA1234567', 'Jane', 'Smith', 0, 4500, 1, 'MA', 'Chi nhánh 2', 1); -- Vi phạm ràng buộc 1
+VALUES ('MA1234567', 'Jane', 'Smith', 'F', 4500, 1, 'MA', 'Branch 2', 1); -- Vi phạm ràng buộc 1
 
