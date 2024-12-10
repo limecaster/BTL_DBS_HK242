@@ -62,16 +62,21 @@ export const updateIngredient = async (id, data) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({
+                name: data.name,
+                importPrice: parseInt(data.importPrice)
+            })
         })
 
-        if (response.status !== 200) {
-            alert('Cập nhật nguyên liệu thất bại: ' + response.data.message);
+        const responseData = await response.json();
+
+        if (response.status >= 400) {
+            alert('Cập nhật nguyên liệu thất bại: ' + responseData.message);
             throw new Error('Update ingredient failed');
         }
 
         alert('Cập nhật nguyên liệu thành công');
-        return response.data;
+        return await response.json();
     } catch (error) {
         console.error('updateIngredient -> error', error);
         return null;

@@ -27,14 +27,14 @@ const routes = [
     component: <MainDashboard />,
   },
   {
-    name: 'Cakes',
+    name: 'Bánh',
     layout: '/admin',
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: '/data-tables',
     component: <DataTables />,
   },
   {
-    name: 'Ingredients',
+    name: 'Nguyên liệu',
     layout: '/admin',
     path: '/ingredient',
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,

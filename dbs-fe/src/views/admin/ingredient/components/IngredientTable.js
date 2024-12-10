@@ -136,7 +136,12 @@ export default function ComplexTable() {
     };
 
     const handleEditIngredient = async (updatedIngredient) => {
-        await updateIngredient(updatedIngredient);
+        const id = updatedIngredient.ID;
+        const data = {
+            name: updatedIngredient.name,
+            importPrice: updatedIngredient.importPrice,
+        }
+        await updateIngredient(id, data);
         fetchData();
     };
 
