@@ -29,21 +29,13 @@ import {
 import ColumnsTable from 'views/admin/dataTables/components/ColumnsTable';
 import React from 'react';
 
-interface CakeAdd {
-  Name: string;
-  Price: number;
-  Type: int;
-  CustomerNote: string;
-  Status: string;
-}
-
 export default function Settings() {
   const [cakeData, setTableData] = React.useState([]);
   const [cakeColumns, setTableColumns] = React.useState([]);
 
   React.useEffect(() => {
     async function fetchCakeData() {
-      const response = await fetch('http://localhost:3000/cake/getAll');
+      const response = await fetch('http://localhost:3001/cake/getAll');
       const data = await response.json();
 
       const columns = Object.keys(data.result[0]).map((key) => ({
@@ -61,11 +53,71 @@ export default function Settings() {
     fetchCakeData();
   }, []);
 
-  //Modal control
+  // Modal control
   const cakeModal = useDisclosure({ id: 'cake' });
   const comboModal = useDisclosure({ id: 'combo' });
 
-  const [addCakeType, setAddCakeType] = React.useState(0);
+  const [addCakeName, setAddCakeName] = React.useState('');
+  const [addCakePrice, setAddCakePrice] = React.useState(0);
+  const [addCakeType, setAddCakeType] = React.useState('0');
+  const [addCakeNote, setAddCakeNote] = React.useState('');
+
+  const addCakeClear = () => {
+    setAddCakeName('');
+    setAddCakePrice(0);
+    setAddCakeType('0');
+    setAddCakeNote('');
+  };
+
+  const handleAddCake = async () => {
+    if (addCakeName === '') {
+      alert('Vui lòng đặt tên bánh');
+      return;
+    }
+
+    if (addCakePrice === 0) {
+      alert('Vui lòng nhập giá bánh');
+      return;
+    }
+
+    if (addCakePrice < 0) {
+      alert('Giá bánh không hợp lệ');
+      return;
+    }
+
+    if (addCakeType === '3' && addCakeNote === '') {
+      alert('Vui lòng nhập ghi chú của khách hàng');
+      return;
+    }
+
+    if (addCakeType !== '3') setAddCakeNote('');
+    try {
+      const response = await fetch('http://localhost:3001/cake/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: addCakeName,
+          price: parseInt(addCakePrice, 10),
+          isSalty: addCakeType === '0',
+          isSweet: addCakeType === '1',
+          isOther: addCakeType === '2',
+          isOrder: addCakeType === '3',
+          customerNote: addCakeNote,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      addCakeClear();
+      alert('Thêm bánh thành công');
+    } catch (err) {
+      console.log(err);
+      alert('Thêm bánh thất bại');
+    }
+  };
 
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
@@ -81,19 +133,35 @@ export default function Settings() {
                 <Tr>
                   <Td>Name</Td>
                   <Td>
-                    <Input type="text" id="Name" placeholder="Cake name" />
+                    <Input
+                      type="text"
+                      id="Name"
+                      placeholder="Cake name"
+                      value={addCakeName}
+                      onChange={(e) => setAddCakeName(e.target.value)}
+                    />
                   </Td>
                 </Tr>
                 <Tr>
                   <Td>Price</Td>
                   <Td>
-                    <Input type="text" id="Price" placeholder="VND" />
+                    <Input
+                      type="number"
+                      id="Price"
+                      placeholder="VND"
+                      value={addCakePrice}
+                      onChange={(e) => setAddCakePrice(e.target.value)}
+                    />
                   </Td>
                 </Tr>
                 <Tr>
                   <Td>Type</Td>
                   <Td>
-                    <RadioGroup defaultValue="0" onChange={setAddCakeType}>
+                    <RadioGroup
+                      defaultValue="0"
+                      value={addCakeType}
+                      onChange={(value) => setAddCakeType(value)}
+                    >
                       <SimpleGrid columns={4} spacing={10}>
                         <Radio value="0">Salty</Radio>
                         <Radio value="1">Sweet</Radio>
@@ -106,10 +174,16 @@ export default function Settings() {
                 <Tr>
                   <Td>Note</Td>
                   <Td>
-                    <Input type="text" id="CustomerNote" placeholder="Note" disabled={addCakeType !== '3'} />
+                    <Input
+                      type="text"
+                      id="CustomerNote"
+                      placeholder="Note"
+                      value={addCakeNote}
+                      disabled={addCakeType !== '3'}
+                      onChange={(e) => setAddCakeNote(e.target.value)}
+                    />
                   </Td>
                 </Tr>
-                
               </Tbody>
             </Table>
           </ModalBody>
@@ -117,7 +191,7 @@ export default function Settings() {
             <Button variant="ghost" onClick={cakeModal.onClose}>
               Close
             </Button>
-            <Button colorScheme="brand" mr={3}>
+            <Button colorScheme="brand" mr={3} onClick={handleAddCake}>
               Add
             </Button>
           </ModalFooter>

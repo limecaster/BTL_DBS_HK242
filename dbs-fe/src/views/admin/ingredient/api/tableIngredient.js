@@ -59,7 +59,7 @@ export const updateIngredient = async (id, data) => {
 export const deleteIngredient = async (id) => {
     try {
         // localhost:3001/ingredient/delete/:id
-        const response = await axios.delete(API_URL + id);
+        const response = await axios.delete(API_URL + 'delete/' + id);
         return response.data;
     } catch (error) {
         console.error('deleteIngredient -> error', error);
