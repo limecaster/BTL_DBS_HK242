@@ -9,6 +9,7 @@ export const createIngredient = async (data) => {
 
         // data format: {name: 'ingredient name', importPrice: 1000}
         if (data.importPrice <= 0) {
+            alert('Giá nhập phải lớn hơn 0');
             throw new Error('Import price must be greater than zero');
         }
         console.log('Price:', data.importPrice);
@@ -17,6 +18,12 @@ export const createIngredient = async (data) => {
             importPrice: Number(data.importPrice)
         });
 
+        if (response.status >= 400) {
+            alert('Tạo nguyên liệu thất bại: ' + response.data.message);
+            throw new Error('Create ingredient failed');
+        }
+
+        alert('Tạo nguyên liệu thành công');
         return response.data;
     } catch (error) {
         console.error('createIngredient -> error', error);
@@ -50,6 +57,13 @@ export const updateIngredient = async (id, data) => {
     try {
         // localhost:3001/ingredient/update/:id
         const response = await axios.put(API_URL + id, data);
+
+        if (response.status !== 200) {
+            alert('Cập nhật nguyên liệu thất bại: ' + response.data.message);
+            throw new Error('Update ingredient failed');
+        }
+
+        alert('Cập nhật nguyên liệu thành công');
         return response.data;
     } catch (error) {
         console.error('updateIngredient -> error', error);
@@ -60,6 +74,14 @@ export const deleteIngredient = async (id) => {
     try {
         // localhost:3001/ingredient/delete/:id
         const response = await axios.delete(API_URL + 'delete/' + id);
+
+        if (response.status !== 200) {
+            alert('Xóa nguyên liệu thất bại: ' + response.data.message);
+            throw new Error('Delete ingredient failed');
+        }
+
+        alert('Xóa nguyên liệu thành công');
+
         return response.data;
     } catch (error) {
         console.error('deleteIngredient -> error', error);
