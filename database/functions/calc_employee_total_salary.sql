@@ -103,30 +103,18 @@ GO
 -- Insert test employee data
 INSERT INTO Employee (ID, FirstName, LastName, Gender, Salary, IsPartTime, ETypeID, BranchName, Status)
 VALUES 
-('MA0010012', 'John', 'Doe', 0, 150000, 0, 'MA', 'Chi nhánh 2', 1),
-('MA0010031', 'Jane', 'Smith', 1, 180000, 0, 'MA', 'Chi nhánh 2', 1);
-
--- Insert test shifts
-INSERT INTO Shift (WeekDay, StartHour, Status)
-VALUES 
-(2, '08:00:00', 1), -- Monday
-(3, '08:00:00', 1), -- Tuesday
-(4, '08:00:00', 1), -- Wednesday
-(5, '08:00:00', 1), -- Thursday
-(6, '08:00:00', 1), -- Friday
-(7, '08:00:00', 1), -- Saturday
-(8, '08:00:00', 1); -- Sunday
+    ('MA0050001', 'Son', 'Thinh Trung', 'M', 500000, 0, 'MA', 'Branch 5', 1);
 
 -- Insert test WorksIn records
 INSERT INTO WorksIn (EID, WeekDay, StartHour, Date, Status)
 VALUES
-('MA0010012', 2, '08:00:00', '2024-12-01', 1), -- Monday shift
-('MA0010012', 3, '08:00:00', '2024-12-02', 1), -- Tuesday shift
-('MA0010012', 7, '08:00:00', '2024-12-07', 1), -- Saturday shift
-('MA0010012', 8, '08:00:00', '2024-12-08', 1), -- Sunday shift
-('MA0010031', 2, '08:00:00', '2024-12-01', 1), -- Monday shift
-('MA0010031', 5, '08:00:00', '2024-12-05', 1), -- Thursday shift
-('MA0010031', 7, '08:00:00', '2024-12-07', 1); -- Saturday shift
+('MA0050001', 2, '08:00:00', '2024-12-01', 1), -- Monday shift
+('MA0050001', 3, '08:00:00', '2024-12-02', 1), -- Tuesday shift
+('MA0050001', 4, '08:00:00', '2024-12-03', 1), -- Saturday shift
+('MA0050001', 5, '08:00:00', '2024-12-04', 1), -- Sunday shift
+('MA0050001', 6, '08:00:00', '2024-12-05', 1), -- Monday shift
+('MA0050001', 7, '08:00:00', '2024-12-06', 1), -- Thursday shift
+('MA0050001', 8, '08:00:00', '2024-12-07', 1); -- Saturday shift
 
-SELECT * FROM dbo.CalculateEmployeeTotalSalary('MA0010012', '2024-12-01', '2024-12-08', 1.2); -- ok
-SELECT * FROM dbo.CalculateEmployeeTotalSalary('MA0013312', '2024-12-01', '2024-12-08', 1.2); -- invalid EID
+SELECT * FROM dbo.CalculateEmployeeTotalSalary('MA0050001', '2024-12-01', '2024-12-08', 1.2); -- ok
+SELECT * FROM dbo.CalculateEmployeeTotalSalary('MA0050002', '2024-12-01', '2024-12-08', 1.2); -- invalid EID

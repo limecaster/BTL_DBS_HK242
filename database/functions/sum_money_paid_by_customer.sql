@@ -53,17 +53,17 @@ GO
 ------------------------------------------------------------------------
 --------------------------------- DEMO ---------------------------------
 ------------------------------------------------------------------------
--- SELECT dbo.GetTotalMoneyPaidByCustomer('2222222222', '2024-01-01', '2024-12-31') AS TotalPaid; -- user not exist
--- SELECT dbo.GetTotalMoneyPaidByCustomer('0901234567', '2024-01-01', '2024-12-31') AS TotalPaid; -- user exist
--- SELECT dbo.GetTotalMoneyPaidByCustomer('0901234567', '2024-12-31', '2024-01-01') AS TotalPaid; -- invalid date range
--- SELECT dbo.GetTotalMoneyPaidByCustomer('0901234567', NULL, NULL) AS TotalPaid; -- no date range
+SELECT dbo.GetTotalMoneyPaidByCustomer('2222222222', '2024-01-01', '2024-12-31') AS TotalPaid; -- user not exist
+SELECT dbo.GetTotalMoneyPaidByCustomer('0901234567', '2024-01-01', '2024-12-31') AS TotalPaid; -- user exist
+SELECT dbo.GetTotalMoneyPaidByCustomer('0901234567', '2024-12-31', '2024-01-01') AS TotalPaid; -- invalid date range
+SELECT dbo.GetTotalMoneyPaidByCustomer('0901234567', NULL, NULL) AS TotalPaid; -- no date range
 
--- -- insert new customer
--- INSERT INTO
---     Customer (Phone, FirstName, LastName, Gender, AddressID, MembershipPoint, MembershipID, Password, Status)
--- VALUES
---     ('0915855146', N'Linh', N'Thinh Tran Khanh', 1, 1, 0, 2, 'password123', 1),
+-- insert new customer
+INSERT INTO
+    Customer (Phone, FirstName, LastName, Gender, AddressID, MembershipPoint, MembershipID, Password, Status)
+VALUES
+    ('0915855146', N'Linh', N'Thinh Tran Khanh', 1, 1, 0, 2, 'password123', 1),
 
--- SELECT dbo.GetTotalMoneyPaidByCustomer('0915855146', '2024-01-01', '2024-12-31') AS TotalPaid; -- user exist but has no bill
+SELECT dbo.GetTotalMoneyPaidByCustomer('0915855146', '2024-01-01', '2024-12-31') AS TotalPaid; -- user exist but has no bill
 
 
