@@ -74,11 +74,11 @@ VALUES ('1234567890', 1)
 INSERT INTO EmployeePhone (Phone, Status)
 VALUES ('0987654321', 1)
 
-INSERT INTO Employee (ID, FirstName, LastName, Gender, Salary, IsPartTime, EPhoneID, ETypeID, BranchName, Status)
-VALUES ('123456789', 'John', 'Doe', 1, 50000, 0, 1, '01', 'Branch 1', 1)
+INSERT INTO Employee (ID, FirstName, LastName, Gender, Salary, IsPartTime, ETypeID, BranchName, Status)
+VALUES ('123456789', 'John', 'Doe', 1, 50000, 0, '01', 'Branch 1', 1)
 
-INSERT INTO Employee (ID, FirstName, LastName, Gender, Salary, IsPartTime, EPhoneID, ETypeID, BranchName, Status)
-VALUES ('987654321', 'Jane', 'Doe', 0, 30000, 1, 2, '02', 'Branch 2', 1)
+INSERT INTO Employee (ID, FirstName, LastName, Gender, Salary, IsPartTime, ETypeID, BranchName, Status)
+VALUES ('987654321', 'Jane', 'Doe', 0, 30000, 1, '02', 'Branch 2', 1)
 
 UPDATE Employee
 SET BranchName = 'Branch 2'
