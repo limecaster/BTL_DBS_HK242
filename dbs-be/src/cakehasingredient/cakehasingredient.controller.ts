@@ -17,7 +17,7 @@ export class CakehasingredientController {
     return await this.cakehasingredientService.findAll();
   }
 
-  @Get('GetAllIngredientOfCake/:id')
+  @Get('getAllIngredientOfCake/:id')
   async findAllIngredientOfCake(@Param('id') id: string) {
     return await this.cakehasingredientService.findAllIngredientOfCake(+id);
   }

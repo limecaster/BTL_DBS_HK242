@@ -74,16 +74,16 @@ VALUES
 INSERT INTO
     Employee (ID, FirstName, LastName, Gender, Salary, IsPartTime, ETypeID, BranchName, Status)
 VALUES
-    ('MA0010001', 'Nguyễn', 'Văn A', 1, 15000000, 0, 'MA', 'Chi nhánh 1', 1),
-    ('BA0010002', 'Lê', 'Thị B', 0, 12000000, 0, 'BA', 'Chi nhánh 1', 1),
-    ('WA0010003', 'Phạm', 'Văn C', 1, 70000, 1, 'WA', 'Chi nhánh 2', 1),
-    ('CA0010004', 'Hoàng', 'Thị D', 0, 9000000, 0, 'CA', 'Chi nhánh 3', 1),
-    ('SH0010005', 'Trần', 'Văn E', 1, 50000, 1, 'SH', 'Chi nhánh 4', 1),
-    ('BA0010006', 'Võ', 'Thị F', 0, 11000000, 0, 'BA', 'Chi nhánh 5', 1),
-    ('WA0010007', 'Đặng', 'Văn G', 1, 65000, 1, 'WA', 'Chi nhánh 1', 1),
-    ('CA0010008', 'Lý', 'Thị H', 0, 8500000, 0, 'CA', 'Chi nhánh 2', 1),
-    ('SH0010009', 'Ngô', 'Văn I', 1, 45000, 1, 'SH', 'Chi nhánh 3', 1),
-    ('BA0010010', 'Trịnh', 'Thị K', 0, 11500000, 0, 'BA', 'Chi nhánh 4', 1);
+    ('MA0010001', 'Nguyễn', 'Văn A', 'M', 15000000, 0, 'MA', 'Chi nhánh 1', 1),
+    ('BA0010002', 'Lê', 'Thị B', 'F', 12000000, 0, 'BA', 'Chi nhánh 1', 1),
+    ('WA0010003', 'Phạm', 'Văn C', 'M', 70000, 1, 'WA', 'Chi nhánh 2', 1),
+    ('CA0010004', 'Hoàng', 'Thị D', 'F', 9000000, 0, 'CA', 'Chi nhánh 3', 1),
+    ('SH0010005', 'Trần', 'Văn E', 'M', 50000, 1, 'SH', 'Chi nhánh 4', 1),
+    ('BA0010006', 'Võ', 'Thị F', 'F', 11000000, 0, 'BA', 'Chi nhánh 5', 1),
+    ('WA0010007', 'Đặng', 'Văn G', 'M', 65000, 1, 'WA', 'Chi nhánh 1', 1),
+    ('CA0010008', 'Lý', 'Thị H', 'F', 8500000, 0, 'CA', 'Chi nhánh 2', 1),
+    ('SH0010009', 'Ngô', 'Văn I', 'M', 45000, 1, 'SH', 'Chi nhánh 3', 1),
+    ('BA0010010', 'Trịnh', 'Thị K', 'F', 11500000, 0, 'BA', 'Chi nhánh 4', 1);
 
 
 -- Điện thoại nhân viên
@@ -206,11 +206,11 @@ VALUES
 INSERT INTO
     Customer (Phone, FirstName, LastName, Gender, AddressID, MembershipPoint, MembershipID, Password, Status)
 VALUES
-    ('0901234567', N'Trần', N'Văn A', 1, 1, 150, 2, 'password123', 1),
-    ('0901234568', N'Lê', N'Thị B', 0, 2, 320, 3, 'securepass', 1),
-    ('0901234569', N'Nguyễn', N'Văn C', 1, 3, 50, 1, 'abc123', 1),
-    ('0901234570', N'Võ', N'Văn D', 1, 4, 120, 2, 'mypassword1', 1),
-    ('0901234571', N'Phan', N'Văn E', 0, 5, 230, 3, 'password2024', 1);
+    ('0901234567', N'Trần', N'Văn A', 'M', 1, 150, 2, 'password123', 1),
+    ('0901234568', N'Lê', N'Thị B', 'F', 2, 320, 3, 'securepass', 1),
+    ('0901234569', N'Nguyễn', N'Văn C', 'M', 3, 50, 1, 'abc123', 1),
+    ('0901234570', N'Võ', N'Văn D', 'M', 4, 120, 2, 'mypassword1', 1),
+    ('0901234571', N'Phan', N'Văn E', 'M', 5, 230, 3, 'password2024', 1);
 
 
 INSERT INTO
@@ -225,10 +225,10 @@ VALUES
 INSERT INTO
     Cake (Name, Price, IsSalty, IsSweet, IsOther, IsOrder, CustomerNote, Status)
 VALUES
-    (N'Bánh mì', 10000, 1, 0, 0, 0, NULL, 1),
+    (N'Bánh mì', 10000, 0, 0, 1, 0, NULL, 1),
     (N'Bánh ngọt', 20000, 0, 1, 0, 0, NULL, 1),
     (N'Bánh mặn', 30000, 1, 0, 0, 0, NULL, 1),
-    (N'Bánh đặt 1', 50000, 0, 0, 1, 1, N'Không đường', 1);
+    (N'Bánh đặt 1', 50000, 0, 0, 0, 1, N'Không đường', 1);
 
 
 INSERT INTO
@@ -248,13 +248,13 @@ VALUES
 
 
 INSERT INTO
-    Bill (ReceiveAddress, ReceiveMoney, Date, CashierID, CustomerPhone, Status)
+    Bill (ReceiveAddress, ReceiveMoney, Date, CashierID, CustomerPhone, TotalPrice, [Status])
 VALUES
-    (N'123 Đường A', 100000, '2024-12-01 10:00:00', 'CA0010004', '0901234567', 1),
-    (N'456 Đường B', 200000, '2024-12-02 15:00:00', 'CA0010004', '0901234568', 1),
-    (N'789 Đường C', 150000, '2024-12-03 17:00:00', 'CA0010008', '0901234569', 1),
-    (N'1010 Đường D', 250000, '2024-12-04 11:00:00', 'CA0010004', '0901234570', 1),
-    (N'1212 Đường E', 500000, '2024-12-05 16:00:00', 'CA0010008', '0901234571', 1);
+    (N'123 Đường A', 100000, '2024-12-01 10:00:00', 'CA0010004', '0901234567', 400000, 1),
+    (N'456 Đường B', 200000, '2024-12-02 15:00:00', 'CA0010004', '0901234568', 50000, 1),
+    (N'789 Đường C', 150000, '2024-12-03 17:00:00', 'CA0010008', '0901234569', 95000, 1),
+    (N'1010 Đường D', 250000, '2024-12-04 11:00:00', 'CA0010004', '0901234570', 31000, 1),
+    (N'1212 Đường E', 500000, '2024-12-05 16:00:00', 'CA0010008', '0901234571', 238000, 1);
 
 
 INSERT INTO
