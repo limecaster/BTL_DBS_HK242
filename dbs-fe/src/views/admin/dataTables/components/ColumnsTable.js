@@ -129,7 +129,11 @@ export default function ColumnsTable({ columnsData, tableData, tableName }) {
                     minW={{ sm: '150px', md: '200px', lg: 'auto' }}
                     borderColor="transparent"
                   >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  {typeof cell.getValue() === 'boolean' ? (
+                    cell.getValue() ? '✅' : '❌'
+                  ) : (
+                    flexRender(cell.column.columnDef.cell, cell.getContext())
+                  )}
                   </Td>
                 ))}
               </Tr>

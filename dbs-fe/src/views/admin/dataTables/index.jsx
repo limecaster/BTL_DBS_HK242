@@ -1,6 +1,7 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Menu, MenuButton, MenuItem, SimpleGrid } from '@chakra-ui/react';
 import ColumnsTable from 'views/admin/dataTables/components/ColumnsTable';
 import React from 'react';
+import { Button } from 'bootstrap';
 
 export default function Settings() {
   const [cakeData, setTableData] = React.useState([]);
@@ -28,6 +29,9 @@ export default function Settings() {
 
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
+      <Menu>
+        <MenuButton>...</MenuButton>
+      </Menu>
       <ColumnsTable columnsData={cakeColumns} tableData={cakeData} tableName={'Cakes'} />
     </Box>
   );
