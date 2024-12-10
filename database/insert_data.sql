@@ -225,10 +225,10 @@ VALUES
 INSERT INTO
     Cake (Name, Price, IsSalty, IsSweet, IsOther, IsOrder, CustomerNote, Status)
 VALUES
-    (N'Bánh mì', 10000, 1, 0, 0, 1, N'', 1),
-    (N'Bánh ngọt', 20000, 0, 1, 0, 1, N'Không đường', 1),
-    (N'Bánh mặn', 30000, 1, 0, 0, 1, N'Có phô mai', 1),
-    (N'Bánh khác', 50000, 0, 0, 1, 1, N'Hương vị đặc biệt', 1);
+    (N'Bánh mì', 10000, 1, 0, 0, 0, NULL, 1),
+    (N'Bánh ngọt', 20000, 0, 1, 0, 0, NULL, 1),
+    (N'Bánh mặn', 30000, 1, 0, 0, 0, NULL, 1),
+    (N'Bánh đặt 1', 50000, 0, 0, 1, 1, N'Không đường', 1);
 
 
 INSERT INTO
